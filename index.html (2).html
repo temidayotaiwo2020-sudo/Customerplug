@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CustomerPlug — Your Business Never Sleeps</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#1a3aff;--blue-dark:#0f22cc;--blue-light:#e8ecff;--black:#0a0a0a;--white:#ffffff;--gray:#f5f5f7;--gray-mid:#e0e0e0;--text-muted:#666;--text-dark:#1a1a1a;--radius:16px;--radius-lg:24px}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--white);color:var(--text-dark);overflow-x:hidden}
+h1,h2,h3,h4,.nav-logo{font-family:'Syne',sans-serif}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-mid)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:800;color:var(--black);text-decoration:none;cursor:pointer}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--text-dark);font-size:.9rem;font-weight:500;transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta{background:var(--blue)!important;color:var(--white)!important;padding:.6rem 1.4rem!important;border-radius:50px!important;font-weight:600!important}
+.nav-cta:hover{background:var(--blue-dark)!important}
+.page{display:none}.page.active{display:block}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--black);display:flex;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(26,58,255,.3) 0%,transparent 70%);pointer-events:none}
+.hc{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(26,58,255,.2);border:1px solid rgba(26,58,255,.4);color:#8aa0ff;padding:.4rem 1rem;border-radius:50px;font-size:.85rem;font-weight:500;margin-bottom:2rem}
+.dot{width:8px;height:8px;background:var(--blue);border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+@keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-logo-wrap{width:90px;height:90px;margin:0 auto 2rem;animation:fu .5s .1s ease both}
+.hero h1{font-size:clamp(2.4rem,6vw,5rem);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:1.5rem;animation:fu .5s .2s ease both}
+.hero h1 span{color:var(--blue)}
+.hero-sub{font-size:1.15rem;color:#aaa;max-width:580px;margin:0 auto 2.5rem;line-height:1.7;font-weight:300;animation:fu .5s .3s ease both}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fu .5s .4s ease both}
+.btn-primary{background:var(--blue);color:var(--white);padding:.9rem 2rem;border-radius:50px;font-size:1rem;font-weight:600;text-decoration:none;transition:all .2s;display:inline-block;font-family:'Outfit',sans-serif}
+.btn-primary:hover{background:var(--blue-dark);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--white);padding:.9rem 2rem;border-radius:50px;font-size:1rem;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,.3);transition:all .2s;display:inline-block;cursor:pointer}
+.btn-ghost:hover{border-color:var(--white);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,#555,transparent);animation:sl 2s infinite}
+@keyframes sl{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* TRUST BAR */
+.trust-bar{background:var(--blue);padding:.8rem 2rem;text-align:center}
+.trust-bar p{color:rgba(255,255,255,.9);font-size:.88rem;font-weight:500;letter-spacing:.02em}
+.trust-bar strong{color:#fff}
+
+/* SECTIONS */
+section{padding:6rem 2rem}
+.container{max-width:1100px;margin:0 auto}
+.section-label{font-size:.78rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:var(--black);line-height:1.2;margin-bottom:1rem}
+.section-sub{font-size:1rem;color:var(--text-muted);max-width:580px;line-height:1.7}
+
+/* PROBLEM */
+.problem{background:var(--gray)}
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:3rem}
+.problem-card{background:var(--white);border-radius:var(--radius);padding:2rem;border:1px solid var(--gray-mid);transition:transform .2s,box-shadow .2s}
+.problem-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08)}
+.problem-icon{font-size:2rem;margin-bottom:1rem}
+.problem-card h3{font-size:1.05rem;font-weight:700;color:var(--black);margin-bottom:.6rem}
+.problem-card p{font-size:.92rem;color:var(--text-muted);line-height:1.65}
+.phone-off-banner{background:var(--black);border-radius:var(--radius-lg);padding:2.5rem;margin-top:3rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.phone-off-icon{font-size:3.5rem;flex-shrink:0}
+.phone-off-text h3{font-size:1.3rem;font-weight:800;color:var(--white);margin-bottom:.5rem}
+.phone-off-text p{font-size:.95rem;color:#888;line-height:1.7}
+.phone-off-text strong{color:var(--blue)}
+
+/* HOW IT WORKS — MOTION GRAPHICS */
+.how-section{background:var(--white)}
+
+/* Stage navigation dots */
+.stage-nav{display:flex;justify-content:center;gap:10px;margin:2rem 0 0}
+.stage-dot{width:10px;height:10px;border-radius:50%;background:var(--gray-mid);cursor:pointer;transition:all .3s}
+.stage-dot.active{background:var(--blue);transform:scale(1.3)}
+
+/* Arena */
+.mg-arena{background:var(--gray);border-radius:var(--radius-lg);overflow:hidden;margin-top:1rem;min-height:560px;position:relative}
+.mg-stage{display:none;animation:stageIn .4s ease}
+.mg-stage.active{display:flex;flex-direction:column}
+@keyframes stageIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* Scene area */
+.mg-scene{background:var(--black);min-height:280px;display:flex;align-items:center;justify-content:center;padding:2.5rem 1.5rem;position:relative;overflow:hidden}
+.mg-scene::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(26,58,255,.15) 0%,transparent 70%);pointer-events:none}
+.mg-scene-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap;width:100%}
+
+/* Caption */
+.mg-caption{padding:2rem 2.5rem}
+.mg-step-tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:.73rem;font-weight:700;padding:.25rem .8rem;border-radius:50px;margin-bottom:.75rem}
+.mg-caption h3{font-size:1.25rem;font-weight:800;color:var(--black);margin-bottom:.6rem;line-height:1.3}
+.mg-caption p{font-size:.93rem;color:var(--text-muted);line-height:1.75}
+
+/* Nav buttons */
+.mg-nav-btns{display:flex;align-items:center;justify-content:center;gap:1.5rem;padding:1.5rem 2rem;background:var(--gray);border-top:1px solid var(--gray-mid)}
+.mg-nav-btn{background:transparent;border:2px solid var(--gray-mid);color:var(--text-dark);padding:.6rem 1.4rem;border-radius:50px;font-family:'Outfit',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s}
+.mg-nav-btn:hover{border-color:var(--blue);color:var(--blue)}
+.mg-nav-btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.mg-nav-btn.primary:hover{background:var(--blue-dark)}
+.mg-nav-counter{font-size:.85rem;color:var(--text-muted);font-weight:500;min-width:50px;text-align:center}
+
+/* ---- STAGE 0: SETUP ---- */
+.setup-scene{align-items:center;gap:1.5rem}
+.setup-form-card{background:#111;border:1px solid #222;border-radius:var(--radius);padding:1.5rem;width:240px;flex-shrink:0}
+.setup-form-title{font-size:.78rem;font-weight:700;color:#8aa0ff;margin-bottom:1rem;display:flex;align-items:center;gap:.4rem;line-height:1.3}
+.form-field{background:#1a1a1a;border-radius:8px;padding:.5rem .7rem;margin-bottom:.5rem}
+.form-label{display:block;font-size:.6rem;color:#555;margin-bottom:.2rem}
+.form-val{font-size:.73rem;color:#e9edef;font-weight:500}
+.form-submit-btn{background:var(--blue);color:#fff;text-align:center;padding:.6rem;border-radius:8px;font-size:.75rem;font-weight:700;margin-top:.8rem;cursor:pointer;transition:opacity .3s}
+.setup-arrow{font-size:1.8rem;color:#333;flex-shrink:0}
+.setup-result-card{background:#111;border:1px solid #1a3aff33;border-radius:var(--radius);padding:1.5rem;width:180px;text-align:center;flex-shrink:0;opacity:0;transform:scale(.9);transition:all .5s}
+.setup-result-card.visible{opacity:1;transform:scale(1)}
+.learning-bar{background:#1a1a1a;border-radius:50px;height:6px;margin:1rem 0 .4rem;overflow:hidden}
+.learning-fill{height:100%;background:var(--blue);border-radius:50px;width:0;transition:width .1s linear}
+.learning-label{font-size:.65rem;color:#555}
+
+/* ---- STAGE 1: CONNECT ---- */
+.connect-scene{gap:1rem;align-items:center;justify-content:center}
+.connect-phone{background:#111;border:2px solid #222;border-radius:16px;padding:1rem;text-align:center;width:110px;flex-shrink:0}
+.connect-phone-screen{display:flex;flex-direction:column;align-items:center}
+.connect-line{flex:1;max-width:120px;height:4px;background:#1a1a1a;border-radius:2px;position:relative;overflow:hidden;min-width:60px}
+.connect-pulse{position:absolute;top:-3px;left:-20px;width:20px;height:10px;background:linear-gradient(90deg,transparent,var(--blue),transparent);border-radius:2px;animation:none}
+.connect-pulse.active{animation:pulseMove 1s linear infinite}
+@keyframes pulseMove{0%{left:-20px}100%{left:100%}}
+.connect-cloud{background:rgba(26,58,255,.15);border:2px solid rgba(26,58,255,.3);border-radius:var(--radius);padding:1rem 1.2rem;text-align:center;flex-shrink:0;position:relative;min-width:110px}
+.cloud-live-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#25d366;color:#fff;font-size:.6rem;font-weight:700;padding:.15rem .5rem;border-radius:50px;white-space:nowrap;opacity:0;transition:opacity .4s}
+.cloud-live-badge.visible{opacity:1}
+.connect-timer{background:#111;border:1px solid #222;border-radius:var(--radius);padding:1.2rem;text-align:center;flex-shrink:0;min-width:100px}
+.timer-progress{background:#1a1a1a;border-radius:50px;height:5px;margin-top:.6rem;overflow:hidden}
+.timer-bar{height:100%;background:var(--blue);border-radius:50px;width:0;transition:width .05s linear}
+
+/* ---- STAGE 2: LIVE CHAT ---- */
+.chat-scene{gap:1.5rem;align-items:center;justify-content:center}
+.owner-phone-off{background:#111;border:1px solid #1a1a1a;border-radius:var(--radius);padding:1rem;text-align:center;flex-shrink:0;opacity:.7}
+.live-phone-frame{background:#111;border-radius:28px;padding:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);width:200px;flex-shrink:0}
+.live-phone-notch{width:60px;height:14px;background:#000;border-radius:0 0 10px 10px;margin:0 auto 6px}
+.live-phone-screen{background:#0b141a;border-radius:20px;overflow:hidden;min-height:320px;display:flex;flex-direction:column}
+.live-status-bar{background:#202c33;padding:.3rem .7rem;display:flex;justify-content:space-between;font-size:.58rem;color:#8696a0}
+.live-wa-header{background:#1f2c34;padding:.5rem .7rem;display:flex;align-items:center;gap:.5rem}
+.live-wa-avatar{width:28px;height:28px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.live-messages{flex:1;padding:.6rem;display:flex;flex-direction:column;gap:.4rem;overflow:hidden}
+.lmsg{max-width:88%;padding:.4rem .6rem;border-radius:10px;font-size:.65rem;line-height:1.4;animation:msgIn .3s ease both}
+.lmsg.c{background:#202c33;color:#e9edef;align-self:flex-start;border-bottom-left-radius:2px}
+.lmsg.b{background:#005c4b;color:#e9edef;align-self:flex-end;border-bottom-right-radius:2px}
+.lmsg-typing{background:#202c33;border-radius:10px;border-bottom-left-radius:2px;padding:.4rem .6rem;align-self:flex-start;display:flex;gap:3px;align-items:center}
+.lmsg-typing span{width:5px;height:5px;background:#8696a0;border-radius:50%;animation:typingBounce 1.2s infinite}
+.lmsg-typing span:nth-child(2){animation-delay:.2s}
+.lmsg-typing span:nth-child(3){animation-delay:.4s}
+.response-badge{background:#111;border:1px solid #1a3aff44;border-radius:var(--radius);padding:1rem;text-align:center;flex-shrink:0}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+
+/* ---- STAGE 3: FOLLOW UP ---- */
+.followup-scene{justify-content:center;padding:1rem}
+.followup-timeline{display:flex;flex-direction:column;gap:0;max-width:420px;width:100%}
+.fu-event{display:flex;align-items:flex-start;gap:.8rem;position:relative}
+.fu-dot{width:14px;height:14px;min-width:14px;border-radius:50%;margin-top:.25rem;flex-shrink:0;transition:background .4s}
+.fu-dot.blue{background:var(--blue)}
+.fu-dot.grey{background:#333}
+.fu-dot.green{background:#25d366}
+.fu-dot.pulse-dot{animation:pulseDot 1.5s infinite}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 rgba(26,58,255,.4)}50%{box-shadow:0 0 0 8px rgba(26,58,255,0)}}
+.fu-line{position:absolute;left:6px;top:18px;width:2px;height:calc(100% + 8px);background:#1a1a1a}
+.fu-event:last-child .fu-line{display:none}
+.fu-card{background:#111;border:1px solid #1a1a1a;border-radius:10px;padding:.7rem .9rem;margin-bottom:10px;flex:1;transition:all .3s}
+.fu-card.faded{opacity:.4}
+.fu-card.highlight-card{border-color:rgba(26,58,255,.4);background:rgba(26,58,255,.08)}
+.fu-time{font-size:.62rem;color:#555;margin-bottom:.2rem}
+.fu-text{font-size:.73rem;font-weight:600;color:#e9edef}
+.fu-msg{font-size:.66rem;color:#8696a0;margin-top:.3rem;line-height:1.5;font-style:italic}
+
+/* ---- STAGE 4: REPORT ---- */
+.report-scene{gap:2rem;align-items:center;justify-content:center}
+.report-phone{background:#111;border-radius:28px;padding:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);width:210px;flex-shrink:0}
+.report-phone-notch{width:60px;height:14px;background:#000;border-radius:0 0 10px 10px;margin:0 auto 6px}
+.report-phone-screen{background:#0b141a;border-radius:20px;overflow:hidden}
+.report-wa-header{background:#1f2c34;padding:.5rem .7rem;display:flex;align-items:center;gap:.5rem}
+.report-wa-avatar{width:26px;height:26px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.report-msg-area{padding:.6rem}
+.report-msg{background:#005c4b;border-radius:10px;border-bottom-right-radius:2px;padding:.8rem;color:#e9edef;transform:translateY(20px);opacity:0;transition:all .5s}
+.report-msg.visible{transform:translateY(0);opacity:1}
+.report-title{font-size:.75rem;font-weight:800;margin-bottom:.6rem;color:#fff}
+.report-row{display:flex;justify-content:space-between;font-size:.65rem;padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.75)}
+.r-val{font-weight:700;color:#fff;transition:all .3s}
+.report-divider{margin:.5rem 0}
+.report-top-q{font-size:.62rem;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:.4rem}
+.report-alert{font-size:.62rem;background:rgba(255,200,0,.15);color:#ffd700;padding:.3rem .5rem;border-radius:6px}
+.report-owner{background:#111;border:1px solid #1a1a1a;border-radius:var(--radius);padding:1.2rem;text-align:center;flex-shrink:0}
+
+/* FEATURES */
+.features-section{background:var(--black)}
+.features-section .section-title{color:var(--white)}
+.features-section .section-label{color:#8aa0ff}
+.features-section .section-sub{color:#888}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.feature-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:2rem;transition:all .2s}
+.feature-card:hover{background:rgba(26,58,255,.1);border-color:rgba(26,58,255,.35)}
+.feature-icon{width:48px;height:48px;background:rgba(26,58,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem}
+.feature-card h3{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+.feature-card p{font-size:.88rem;color:#777;line-height:1.65}
+
+/* SUBSCRIPTION CLARITY BANNER */
+.sub-banner{background:var(--blue-light);border:2px solid var(--blue);border-radius:var(--radius-lg);padding:2.5rem;text-align:center;margin-bottom:3rem}
+.sub-banner h3{font-size:1.4rem;font-weight:800;color:var(--black);margin-bottom:.6rem}
+.sub-banner p{font-size:.97rem;color:var(--text-muted);line-height:1.7;max-width:620px;margin:0 auto}
+.sub-banner strong{color:var(--blue)}
+
+/* PRICING */
+.pricing-section{background:var(--gray)}
+.pricing-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:2rem;margin-top:3rem;align-items:start}
+.pricing-card{border-radius:var(--radius-lg);padding:2.5rem;border:1px solid var(--gray-mid);position:relative;background:var(--white)}
+.pricing-card.featured{background:var(--blue);border-color:var(--blue)}
+.pricing-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--black);color:var(--white);font-size:.72rem;font-weight:700;padding:.3rem 1rem;border-radius:50px;white-space:nowrap;letter-spacing:.05em}
+.plan-name{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:.5rem;color:var(--black)}
+.featured .plan-name{color:var(--white)}
+.plan-price{font-family:'Syne',sans-serif;font-size:2.6rem;font-weight:800;color:var(--black);margin:1rem 0}
+.plan-price small{font-size:1rem;font-weight:400}
+.featured .plan-price{color:var(--white)}
+.plan-desc{font-size:.9rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.6}
+.featured .plan-desc{color:rgba(255,255,255,.75)}
+.plan-powered{font-size:.78rem;font-weight:600;background:rgba(26,58,255,.1);color:var(--blue);padding:.3rem .8rem;border-radius:50px;display:inline-block;margin-bottom:1rem}
+.featured .plan-powered{background:rgba(255,255,255,.2);color:#fff}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem}
+.plan-features li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--text-dark);line-height:1.5}
+.featured .plan-features li{color:rgba(255,255,255,.9)}
+.chk{width:18px;height:18px;min-width:18px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:.62rem;margin-top:2px}
+.featured .chk{background:rgba(255,255,255,.25)}
+.plan-btn{display:block;text-align:center;padding:.9rem;border-radius:50px;font-weight:600;font-size:.95rem;text-decoration:none;transition:all .2s;font-family:'Outfit',sans-serif;cursor:pointer;border:none;width:100%}
+.plan-btn.outline{background:transparent;border:2px solid var(--blue);color:var(--blue)}
+.plan-btn.outline:hover{background:var(--blue);color:var(--white)}
+.plan-btn.solid{background:var(--white);color:var(--blue)}
+.plan-btn.solid:hover{background:var(--black);color:var(--white)}
+.setup-note{text-align:center;margin-top:1.5rem;font-size:.88rem;color:var(--text-muted)}
+.setup-note strong{color:var(--black)}
+
+/* TESTIMONIALS */
+.testimonials-section{background:var(--white)}
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.t-card{background:var(--gray);border-radius:var(--radius);padding:2rem;border:1px solid var(--gray-mid)}
+.stars{color:#f5a623;font-size:1rem;margin-bottom:1rem;letter-spacing:2px}
+.t-card blockquote{font-size:.95rem;color:var(--text-dark);line-height:1.75;margin-bottom:1.5rem;font-style:italic}
+.t-author{display:flex;align-items:center;gap:12px}
+.t-avatar{width:44px;height:44px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.88rem;font-family:'Syne',sans-serif}
+.t-info strong{display:block;font-size:.9rem;font-weight:700;color:var(--black)}
+.t-info span{font-size:.8rem;color:var(--text-muted)}
+
+/* FAQ */
+.faq-section{background:var(--gray)}
+.faq-list{display:flex;flex-direction:column;gap:1rem;margin-top:3rem;max-width:740px}
+.faq-item{border:1px solid var(--gray-mid);border-radius:var(--radius);overflow:hidden;background:var(--white)}
+.faq-q{width:100%;background:none;border:none;padding:1.2rem 1.5rem;text-align:left;font-family:'Outfit',sans-serif;font-size:.98rem;font-weight:600;color:var(--black);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;transition:background .2s}
+.faq-q:hover{background:var(--gray)}
+.faq-arrow{font-size:1.3rem;transition:transform .3s;color:var(--blue);flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a p{padding:0 1.5rem 1.3rem;font-size:.93rem;color:var(--text-muted);line-height:1.75}
+
+/* CTA */
+.cta-section{background:var(--blue);text-align:center;padding:6rem 2rem}
+.cta-section h2{font-size:clamp(1.8rem,4vw,3.2rem);font-weight:800;color:var(--white);margin-bottom:1rem;line-height:1.2}
+.cta-section p{font-size:1.05rem;color:rgba(255,255,255,.8);margin-bottom:2.5rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.65}
+.btn-white{background:var(--white);color:var(--blue);padding:1rem 2.5rem;border-radius:50px;font-size:1rem;font-weight:700;text-decoration:none;transition:all .2s;display:inline-block;font-family:'Outfit',sans-serif}
+.btn-white:hover{background:var(--black);color:var(--white);transform:translateY(-2px)}
+
+/* ABOUT PAGE */
+.about-hero{background:var(--black);padding:10rem 2rem 6rem;text-align:center}
+.about-hero h1{font-size:clamp(2rem,5vw,4rem);font-weight:800;color:var(--white);margin-bottom:1rem;line-height:1.2}
+.about-hero h1 em{color:var(--blue);font-style:normal}
+.about-hero p{font-size:1.1rem;color:#aaa;max-width:580px;margin:0 auto;line-height:1.7}
+.about-story{padding:6rem 2rem}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
+.about-text h3{font-size:1.75rem;font-weight:800;color:var(--black);margin-bottom:1.5rem;line-height:1.3}
+.about-text p{font-size:.97rem;color:var(--text-muted);line-height:1.8;margin-bottom:1rem}
+.about-visual{background:var(--blue);border-radius:var(--radius-lg);padding:3rem;text-align:center;color:white}
+.big-num{font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;display:block;margin-bottom:.5rem}
+.about-visual>p{color:rgba(255,255,255,.8);font-size:.95rem;line-height:1.6}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+.stat-box{background:rgba(255,255,255,.12);border-radius:12px;padding:1.2rem .8rem;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;display:block}
+.stat-box span{font-size:.78rem;color:rgba(255,255,255,.7)}
+.values-section{background:var(--gray);padding:6rem 2rem}
+.values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:3rem}
+.value-card{background:var(--white);padding:2rem;border-radius:var(--radius);border:1px solid var(--gray-mid)}
+.value-icon{font-size:2.2rem;margin-bottom:1rem}
+.value-card h3{font-size:1.05rem;font-weight:700;color:var(--black);margin-bottom:.5rem}
+.value-card p{font-size:.9rem;color:var(--text-muted);line-height:1.65}
+
+/* FOOTER */
+footer{background:var(--black);padding:4rem 2rem 2rem}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:3rem;margin-bottom:3rem}
+.footer-brand .fl{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--white);text-decoration:none;margin-bottom:1rem;cursor:pointer}
+.footer-brand .fl span{color:var(--blue)}
+.footer-brand>p{font-size:.88rem;color:#555;line-height:1.6;max-width:230px;margin-bottom:.5rem}
+.social-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem}
+.s-btn{width:36px;height:36px;border-radius:50%;background:#111;border:1px solid #222;display:flex;align-items:center;justify-content:center;font-size:.9rem;text-decoration:none;transition:all .2s}
+.s-btn:hover{background:var(--blue);border-color:var(--blue)}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:1rem;letter-spacing:.05em}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-col ul a{color:#555;text-decoration:none;font-size:.88rem;transition:color .2s;cursor:pointer}
+.footer-col ul a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid #1a1a1a;padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-bottom p{font-size:.82rem;color:#3a3a3a}
+
+/* ANIMATIONS */
+.anim{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.anim.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){nav{padding:1rem 1.5rem}.nav-links{display:none}.footer-top{grid-template-columns:1fr 1fr;gap:2rem}.about-grid{grid-template-columns:1fr}.about-stats{grid-template-columns:1fr 1fr}.how-inner{grid-template-columns:1fr}.phone-demo{display:none}}
+@media(max-width:600px){.footer-top{grid-template-columns:1fr}.pricing-cards{grid-template-columns:1fr}.steps::before{display:none}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="show('home')">
+    <svg width="38" height="38" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="12" fill="#0a0a0a"/>
+      <ellipse cx="52" cy="43" rx="36" ry="33" fill="#1a3aff"/>
+      <polygon points="16,74 34,61 26,80" fill="#1a3aff"/>
+      <path d="M38,26 L38,48 Q38,57 50,57 Q62,57 62,48 L62,26" fill="none" stroke="#0a0a0a" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="50" y1="57" x2="50" y2="72" stroke="#0a0a0a" stroke-width="5.5" stroke-linecap="round"/>
+    </svg>
+    Customer<span>Plug</span>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="show('home');go('#how')">How It Works</a></li>
+    <li><a onclick="show('home');go('#features')">Features</a></li>
+    <li><a onclick="show('home');go('#pricing')">Pricing</a></li>
+    <li><a onclick="show('home');go('#faq')">FAQ</a></li>
+    <li><a onclick="show('about')">About Us</a></li>
+    <li><a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank" class="nav-cta">Get Started Free</a></li>
+  </ul>
+</nav>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div id="page-home" class="page active">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hc">
+    <div class="hero-badge"><div class="dot"></div> Now Live — Start Your Free Trial Today</div>
+    <div class="hero-logo-wrap">
+      <svg width="90" height="90" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="18" fill="#0a0a0a"/>
+        <ellipse cx="52" cy="43" rx="36" ry="33" fill="#1a3aff"/>
+        <polygon points="16,74 34,61 26,80" fill="#1a3aff"/>
+        <path d="M38,26 L38,48 Q38,57 50,57 Q62,57 62,48 L62,26" fill="none" stroke="#0a0a0a" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="50" y1="57" x2="50" y2="72" stroke="#0a0a0a" stroke-width="5.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1>Your Business<br><span>Never Sleeps</span> Again</h1>
+    <p class="hero-sub">CustomerPlug handles every WhatsApp message instantly, follows up every lead automatically, and delivers a full business report to you every evening — whether your phone is on or off.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank" class="btn-primary">Start Free Trial</a>
+      <span class="btn-ghost" onclick="go('#how')">See How It Works</span>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div></div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <p>🔒 CAC-Verified Businesses Only &nbsp;|&nbsp; ⚡ Full Setup in 24 Hours &nbsp;|&nbsp; 📱 Works Even When Your Phone is OFF &nbsp;|&nbsp; 🔄 Monthly Subscription — Cancel Anytime</p>
+</div>
+
+<!-- PROBLEM SECTION -->
+<section class="problem" id="problem">
+  <div class="container">
+    <p class="section-label">The Problem</p>
+    <h2 class="section-title">Sound familiar?</h2>
+    <p class="section-sub">Every single day, business owners lose customers they never even knew existed. These are the real pains CustomerPlug was built to solve.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card anim">
+        <div class="problem-icon">😴</div>
+        <h3>Customers message at midnight</h3>
+        <p>A customer sends a message at 11pm asking about your product. No reply. By morning they already bought from your competitor — and you never even knew they reached out.</p>
+      </div>
+      <div class="problem-card anim">
+        <div class="problem-icon">📱</div>
+        <h3>You are trapped in your inbox</h3>
+        <p>You started a business for freedom. But now you cannot eat, rest or spend time with family without your phone glued to your hand, replying messages all day and night.</p>
+      </div>
+      <div class="problem-card anim">
+        <div class="problem-icon">💸</div>
+        <h3>Slow replies mean lost money</h3>
+        <p>Every delayed reply is a sale walking out the door. Customers who don't get a fast response don't wait — they simply go to the next business without thinking twice.</p>
+      </div>
+      <div class="problem-card anim">
+        <div class="problem-icon">🔕</div>
+        <h3>Follow-ups never happen</h3>
+        <p>You meant to follow up the customer who asked about your product last week. But life got busy. They were forgotten. And so was that sale — permanently.</p>
+      </div>
+      <div class="problem-card anim">
+        <div class="problem-icon">🌙</div>
+        <h3>No one covers you after hours</h3>
+        <p>After 6pm your business goes dark. Customers from different time zones, night-shift workers, and late browsers get zero response. That is thousands of naira left on the table every week.</p>
+      </div>
+      <div class="problem-card anim">
+        <div class="problem-icon">🤯</div>
+        <h3>Too many messages, too little time</h3>
+        <p>During busy periods — sales, promos, launches — messages flood in faster than you can read them. You miss some, delay others, and the whole experience falls apart for your customer.</p>
+      </div>
+      <div class="problem-card anim">
+        <div class="problem-icon">📉</div>
+        <h3>No idea how your business is really doing</h3>
+        <p>You respond to messages but have no record of how many leads came in, how many converted, or which questions customers ask most. You are running blind without data.</p>
+      </div>
+      <div class="problem-card anim">
+        <div class="problem-icon">😤</div>
+        <h3>Inconsistent customer experience</h3>
+        <p>On a good day you are helpful and professional. On a tired day your replies are short, delayed, or forgotten. Customers notice the inconsistency — and trust fades.</p>
+      </div>
+    </div>
+
+    <!-- PHONE OFF CALLOUT -->
+    <div class="phone-off-banner anim">
+      <div class="phone-off-icon">📵</div>
+      <div class="phone-off-text">
+        <h3>Your phone can be completely OFF — CustomerPlug still works.</h3>
+        <p>CustomerPlug does not run on your phone. It operates entirely in the cloud, independently. Whether your phone is <strong>off, dead, on flight mode, or in a different country</strong> — CustomerPlug is still responding to your customers, following up leads, and protecting your business. <strong>24 hours a day, 7 days a week, 365 days a year.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS — MOTION GRAPHICS -->
+<section class="how-section" id="how">
+  <div class="container">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title">Set it up once.<br>Let it run forever.</h2>
+    <p class="section-sub">CustomerPlug takes over your WhatsApp completely. Watch exactly what happens — from the moment a customer messages you, to the report you get at the end of the day.</p>
+
+    <!-- STAGE INDICATORS -->
+    <div class="stage-nav" id="stageNav">
+      <div class="stage-dot active" data-stage="0"></div>
+      <div class="stage-dot" data-stage="1"></div>
+      <div class="stage-dot" data-stage="2"></div>
+      <div class="stage-dot" data-stage="3"></div>
+      <div class="stage-dot" data-stage="4"></div>
+    </div>
+
+    <!-- MOTION GRAPHIC ARENA -->
+    <div class="mg-arena">
+
+      <!-- STAGE 0: Setup -->
+      <div class="mg-stage active" id="stage-0">
+        <div class="mg-scene">
+          <div class="mg-scene-inner setup-scene">
+            <div class="setup-form-card">
+              <div class="setup-form-title">
+                <svg width="22" height="22" viewBox="0 0 100 100"><ellipse cx="52" cy="43" rx="36" ry="33" fill="#1a3aff"/><polygon points="16,74 34,61 26,80" fill="#1a3aff"/><path d="M38,26 L38,48 Q38,57 50,57 Q62,57 62,48 L62,26" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/><line x1="50" y1="57" x2="50" y2="72" stroke="#fff" stroke-width="7" stroke-linecap="round"/></svg>
+                Tell CustomerPlug about your business
+              </div>
+              <div class="form-field" id="ff1"><span class="form-label">Business name</span><span class="form-val typing-val" data-text="Amaka's Fashion Store">|</span></div>
+              <div class="form-field" id="ff2"><span class="form-label">What you sell</span><span class="form-val typing-val" data-text="Ladies clothing & accessories">|</span></div>
+              <div class="form-field" id="ff3"><span class="form-label">Price range</span><span class="form-val typing-val" data-text="₦5,000 – ₦45,000">|</span></div>
+              <div class="form-field" id="ff4"><span class="form-label">Delivery</span><span class="form-val typing-val" data-text="1–2 business days, nationwide">|</span></div>
+              <div class="form-submit-btn" id="formSubmitBtn">⚡ Activate CustomerPlug</div>
+            </div>
+            <div class="setup-arrow">→</div>
+            <div class="setup-result-card" id="setupResultCard">
+              <div style="font-size:2.5rem;margin-bottom:.5rem;">🎉</div>
+              <div style="font-weight:800;font-size:1rem;color:#0a0a0a;">CustomerPlug is learning<br>your business...</div>
+              <div class="learning-bar"><div class="learning-fill" id="learningFill"></div></div>
+              <div class="learning-label" id="learningLabel">Analysing products...</div>
+            </div>
+          </div>
+        </div>
+        <div class="mg-caption">
+          <span class="mg-step-tag">Step 1 — One-time setup</span>
+          <h3>You tell CustomerPlug everything about your business</h3>
+          <p>Your products, prices, delivery details, FAQs, and brand voice. The more you share, the smarter CustomerPlug becomes. This happens once — then CustomerPlug is ready to represent your business forever.</p>
+        </div>
+      </div>
+
+      <!-- STAGE 1: Connection -->
+      <div class="mg-stage" id="stage-1">
+        <div class="mg-scene">
+          <div class="mg-scene-inner connect-scene">
+            <div class="connect-phone">
+              <div class="connect-phone-screen">
+                <div style="font-size:2rem;margin-bottom:.4rem;">📱</div>
+                <div style="font-size:.75rem;font-weight:700;color:#e9edef;">Your WhatsApp</div>
+                <div style="font-size:.65rem;color:#8696a0;margin-top:.2rem;">+234 XXX XXXX</div>
+              </div>
+            </div>
+            <div class="connect-line" id="connectLine">
+              <div class="connect-pulse" id="connectPulse"></div>
+            </div>
+            <div class="connect-cloud" id="connectCloud">
+              <div style="font-size:2rem;">☁️</div>
+              <div style="font-size:.72rem;font-weight:700;color:#fff;margin-top:.3rem;">CustomerPlug</div>
+              <div style="font-size:.62rem;color:rgba(255,255,255,.6);">Cloud Server</div>
+              <div class="cloud-live-badge" id="cloudLiveBadge">✅ LIVE</div>
+            </div>
+            <div class="connect-timer" id="connectTimer">
+              <div style="font-size:1.8rem;font-weight:800;color:#1a3aff;" id="timerNum">24</div>
+              <div style="font-size:.7rem;color:#666;">hours to go live</div>
+              <div class="timer-progress"><div class="timer-bar" id="timerBar"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="mg-caption">
+          <span class="mg-step-tag">Step 2 — Full setup in 24 hours</span>
+          <h3>CustomerPlug connects to your WhatsApp number</h3>
+          <p>Within 24 hours, CustomerPlug is fully live on your WhatsApp. No technical skills needed from you — CustomerPlug handles the entire connection. Your phone does not even need to be on for this to work.</p>
+        </div>
+      </div>
+
+      <!-- STAGE 2: Live Chat Demo -->
+      <div class="mg-stage" id="stage-2">
+        <div class="mg-scene">
+          <div class="mg-scene-inner chat-scene">
+            <!-- Owner phone OFF -->
+            <div class="owner-phone-off">
+              <div style="font-size:2rem;">📵</div>
+              <div style="font-size:.7rem;font-weight:700;color:#555;margin-top:.3rem;">Owner's phone</div>
+              <div style="font-size:.65rem;color:#888;">Switched OFF</div>
+            </div>
+            <!-- WhatsApp chat mockup -->
+            <div class="live-phone-frame">
+              <div class="live-phone-notch"></div>
+              <div class="live-phone-screen">
+                <div class="live-status-bar"><span>11:47 PM</span><span>📶</span></div>
+                <div class="live-wa-header">
+                  <div class="live-wa-avatar">
+                    <svg width="20" height="20" viewBox="0 0 100 100"><ellipse cx="52" cy="43" rx="36" ry="33" fill="#fff"/><polygon points="16,74 34,61 26,80" fill="#fff"/><path d="M38,26 L38,48 Q38,57 50,57 Q62,57 62,48 L62,26" fill="none" stroke="#1a3aff" stroke-width="8" stroke-linecap="round"/><line x1="50" y1="57" x2="50" y2="72" stroke="#1a3aff" stroke-width="8" stroke-linecap="round"/></svg>
+                  </div>
+                  <div>
+                    <div style="font-size:.72rem;font-weight:700;color:#e9edef;">CustomerPlug</div>
+                    <div style="font-size:.6rem;color:#25d366;">● Always online</div>
+                  </div>
+                </div>
+                <div class="live-messages" id="liveMessages"></div>
+              </div>
+            </div>
+            <!-- Response time badge -->
+            <div class="response-badge" id="responseBadge">
+              <div style="font-size:.65rem;color:#666;">Reply time</div>
+              <div style="font-size:1.3rem;font-weight:800;color:#1a3aff;">3s</div>
+              <div style="font-size:.6rem;color:#25d366;">⚡ Instant</div>
+            </div>
+          </div>
+        </div>
+        <div class="mg-caption">
+          <span class="mg-step-tag">Step 3 — Instant response, every time</span>
+          <h3>Every message gets a smart reply within seconds</h3>
+          <p>Whether it is 2am or 2pm — a Sunday or a public holiday — CustomerPlug reads every message and responds instantly with an accurate, on-brand reply. Your phone can be completely OFF. CustomerPlug never misses a message.</p>
+        </div>
+      </div>
+
+      <!-- STAGE 3: Follow-up -->
+      <div class="mg-stage" id="stage-3">
+        <div class="mg-scene">
+          <div class="mg-scene-inner followup-scene">
+            <div class="followup-timeline">
+              <div class="fu-event" id="fu0">
+                <div class="fu-dot blue"></div>
+                <div class="fu-line"></div>
+                <div class="fu-card">
+                  <div class="fu-time">Monday 2:14 PM</div>
+                  <div class="fu-text">Customer asks about red dress 👗</div>
+                </div>
+              </div>
+              <div class="fu-event" id="fu1">
+                <div class="fu-dot grey"></div>
+                <div class="fu-line"></div>
+                <div class="fu-card faded">
+                  <div class="fu-time">Monday 6:00 PM</div>
+                  <div class="fu-text">No response from customer...</div>
+                </div>
+              </div>
+              <div class="fu-event" id="fu2">
+                <div class="fu-dot blue pulse-dot"></div>
+                <div class="fu-line"></div>
+                <div class="fu-card highlight-card">
+                  <div class="fu-time">Tuesday 10:00 AM</div>
+                  <div class="fu-text">⚡ CustomerPlug follows up automatically</div>
+                  <div class="fu-msg">"Hi! 👋 Just checking in — the red dress is still available in your size. Shall I reserve one for you?"</div>
+                </div>
+              </div>
+              <div class="fu-event" id="fu3">
+                <div class="fu-dot green" id="fuGreenDot"></div>
+                <div class="fu-card" id="fuSaleCard" style="opacity:0;transform:translateY(10px);transition:all .4s">
+                  <div class="fu-time">Tuesday 10:23 AM</div>
+                  <div class="fu-text">✅ Customer replies — sale closed! 🎉</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mg-caption">
+          <span class="mg-step-tag">Step 4 — Automatic follow-ups</span>
+          <h3>CustomerPlug chases every lead so you never forget</h3>
+          <p>When a customer shows interest but goes quiet, CustomerPlug automatically follows up at the right time with the right message. Leads that would have been forgotten are recovered — turning cold conversations into confirmed sales, without you doing a thing.</p>
+        </div>
+      </div>
+
+      <!-- STAGE 4: Evening Report -->
+      <div class="mg-stage" id="stage-4">
+        <div class="mg-scene">
+          <div class="mg-scene-inner report-scene">
+            <div class="report-phone">
+              <div class="report-phone-notch"></div>
+              <div class="report-phone-screen">
+                <div class="report-wa-header">
+                  <div class="report-wa-avatar">
+                    <svg width="18" height="18" viewBox="0 0 100 100"><ellipse cx="52" cy="43" rx="36" ry="33" fill="#fff"/><polygon points="16,74 34,61 26,80" fill="#fff"/><path d="M38,26 L38,48 Q38,57 50,57 Q62,57 62,48 L62,26" fill="none" stroke="#1a3aff" stroke-width="8" stroke-linecap="round"/><line x1="50" y1="57" x2="50" y2="72" stroke="#1a3aff" stroke-width="8" stroke-linecap="round"/></svg>
+                  </div>
+                  <div>
+                    <div style="font-size:.68rem;font-weight:700;color:#e9edef;">CustomerPlug Report</div>
+                    <div style="font-size:.58rem;color:#8696a0;">Today, 8:00 PM</div>
+                  </div>
+                </div>
+                <div class="report-msg-area">
+                  <div class="report-msg" id="rMsg">
+                    <div class="report-title">📊 Daily Business Report</div>
+                    <div class="report-row" id="rr1"><span>Messages received</span><span class="r-val" data-val="47">0</span></div>
+                    <div class="report-row" id="rr2"><span>Leads captured</span><span class="r-val" data-val="23">0</span></div>
+                    <div class="report-row" id="rr3"><span>Orders confirmed</span><span class="r-val" data-val="11">0</span></div>
+                    <div class="report-row" id="rr4"><span>Follow-ups sent</span><span class="r-val" data-val="8">0</span></div>
+                    <div class="report-divider"></div>
+                    <div class="report-top-q">📌 Top question today:<br><em>"Do you do delivery to Abuja?"</em></div>
+                    <div class="report-alert">⚠️ 2 conversations need your attention</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="report-owner">
+              <div style="font-size:2rem;">😊</div>
+              <div style="font-size:.72rem;font-weight:700;color:#0a0a0a;margin-top:.3rem;">You, relaxing</div>
+              <div style="font-size:.65rem;color:#888;">Fully informed. Zero stress.</div>
+            </div>
+          </div>
+        </div>
+        <div class="mg-caption">
+          <span class="mg-step-tag">Step 5 — Evening business report</span>
+          <h3>You get a full summary every evening — without asking</h3>
+          <p>At the end of each day, CustomerPlug sends you a complete report: messages received, leads captured, orders confirmed, follow-ups sent, top customer questions, and anything needing your personal attention. You stay fully in control — without being chained to your phone all day.</p>
+        </div>
+      </div>
+
+    </div><!-- end mg-arena -->
+
+    <!-- NAVIGATION BUTTONS -->
+    <div class="mg-nav-btns">
+      <button class="mg-nav-btn" id="mgPrev" onclick="mgNavigate(-1)">← Previous</button>
+      <span class="mg-nav-counter" id="mgCounter">1 / 5</span>
+      <button class="mg-nav-btn primary" id="mgNext" onclick="mgNavigate(1)">Next →</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="features-section" id="features">
+  <div class="container">
+    <p class="section-label">What CustomerPlug Does</p>
+    <h2 class="section-title">Everything your business<br>needs — handled automatically.</h2>
+    <p class="section-sub">CustomerPlug is not just an auto-reply tool. It is a full WhatsApp business engine that thinks, responds, follows up, and reports — all without you lifting a finger.</p>
+
+    <div class="features-grid">
+      <div class="feature-card anim">
+        <div class="feature-icon">⚡</div>
+        <h3>Instant 24/7 Response</h3>
+        <p>Every message — day or night, weekday or holiday — gets an intelligent reply within seconds. CustomerPlug never sleeps, takes breaks, or goes offline.</p>
+      </div>
+      <div class="feature-card anim">
+        <div class="feature-icon">🧠</div>
+        <h3>Learns Your Business Deeply</h3>
+        <p>CustomerPlug is trained on your specific products, prices, policies, and brand tone. It responds exactly the way you would — or better. No generic, robotic replies.</p>
+      </div>
+      <div class="feature-card anim">
+        <div class="feature-icon">🔁</div>
+        <h3>Automatic Lead Follow-Ups</h3>
+        <p>CustomerPlug tracks every enquiry and automatically follows up with warm, well-timed messages to turn interested prospects into paying customers.</p>
+      </div>
+      <div class="feature-card anim">
+        <div class="feature-icon">📊</div>
+        <h3>Daily Business Reports</h3>
+        <p>Every evening, you receive a clear report showing enquiries received, leads captured, common questions, and pending conversations — so you stay informed without being overwhelmed.</p>
+      </div>
+      <div class="feature-card anim">
+        <div class="feature-icon">📵</div>
+        <h3>Cloud-Based — Phone-Independent</h3>
+        <p>CustomerPlug runs in the cloud, completely separate from your personal phone. Your device can be off, out of battery, or in another country — your business still operates perfectly.</p>
+      </div>
+      <div class="feature-card anim">
+        <div class="feature-icon">🎯</div>
+        <h3>Smart Customer Qualification</h3>
+        <p>CustomerPlug asks the right questions to identify serious buyers from casual browsers, so when something does need your attention, it is always worth your time.</p>
+      </div>
+      <div class="feature-card anim">
+        <div class="feature-icon">🛡️</div>
+        <h3>Consistent Brand Voice Always</h3>
+        <p>Whether it is the first message or the hundredth, CustomerPlug maintains the same professional, warm, and on-brand tone every single time — no off days, no bad moods.</p>
+      </div>
+      <div class="feature-card anim">
+        <div class="feature-icon">🗓️</div>
+        <h3>Promotions & Broadcast Ready</h3>
+        <p>Launching a new product or running a promo? CustomerPlug can be updated instantly to communicate new offers, answer specific campaign questions, and capture interested buyers automatically.</p>
+      </div>
+      <div class="feature-card anim">
+        <div class="feature-icon">📞</div>
+        <h3>Seamless Human Handover</h3>
+        <p>When a conversation genuinely needs you — a complex order, a complaint, a VIP customer — CustomerPlug flags it and prepares you with full context before you step in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING SECTION -->
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <p class="section-label">Pricing</p>
+    <h2 class="section-title">Simple pricing.<br>Your business, always powered on.</h2>
+    <p class="section-sub">CustomerPlug works like electricity for your business — you pay once a month and your business is fully powered, responsive, and running all 30 days. No surprises, no hidden fees.</p>
+
+    <!-- Subscription Clarity Banner -->
+    <div class="sub-banner anim">
+      <h3>💡 How CustomerPlug Subscription Works</h3>
+      <p>CustomerPlug is a <strong>monthly subscription service</strong>. Each month you subscribe, CustomerPlug keeps your WhatsApp fully operational — replying messages, following up leads, and sending evening reports <strong>every single day of that month</strong>, including weekends and public holidays. Think of it as paying for a full-time, never-sleeping customer service system that is always on.</p>
+    </div>
+
+    <div class="pricing-cards" style="max-width:780px;margin-left:auto;margin-right:auto;">
+      <!-- FREE TRIAL -->
+      <div class="pricing-card anim">
+        <div class="plan-name">Free Trial</div>
+        <div class="plan-price">₦0 <small>/ to start</small></div>
+        <div class="plan-powered">🚀 Get live within 24 hours</div>
+        <p class="plan-desc">Experience CustomerPlug fully before committing. See exactly how it responds to your customers, follows up leads, and reports back to you — at no cost.</p>
+        <ul class="plan-features">
+          <li><div class="chk">✓</div><span>Instant 24/7 WhatsApp responses</span></li>
+          <li><div class="chk">✓</div><span>Automated lead follow-ups</span></li>
+          <li><div class="chk">✓</div><span>Daily evening business reports</span></li>
+          <li><div class="chk">✓</div><span>Cloud-based — works when your phone is off</span></li>
+          <li><div class="chk">✓</div><span>Full setup completed within 24 hours</span></li>
+          <li><div class="chk">✓</div><span>No credit card required</span></li>
+        </ul>
+        <a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank" class="plan-btn outline">Start Free Trial</a>
+      </div>
+
+      <!-- STANDARD -->
+      <div class="pricing-card featured anim">
+        <div class="pricing-badge">✅ FULL ACCESS</div>
+        <div class="plan-name">Standard</div>
+        <div class="plan-price">₦150,000 <small>/month</small></div>
+        <div class="plan-powered">🔋 Full-power, every day of the month</div>
+        <p class="plan-desc">One plan. Everything included. CustomerPlug runs your WhatsApp business communication completely — 30 days, no interruptions, no limits.</p>
+        <ul class="plan-features">
+          <li><div class="chk">✓</div><span>Instant 24/7 WhatsApp responses</span></li>
+          <li><div class="chk">✓</div><span>Unlimited customer conversations</span></li>
+          <li><div class="chk">✓</div><span>Automated lead follow-up sequences</span></li>
+          <li><div class="chk">✓</div><span>Daily evening business reports</span></li>
+          <li><div class="chk">✓</div><span>Smart customer qualification</span></li>
+          <li><div class="chk">✓</div><span>Cloud-based — works when your phone is off</span></li>
+          <li><div class="chk">✓</div><span>Promotions & broadcast updates</span></li>
+          <li><div class="chk">✓</div><span>Consistent brand voice, every message</span></li>
+          <li><div class="chk">✓</div><span>Full setup completed within 24 hours</span></li>
+        </ul>
+        <a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20subscribe%20to%20the%20CustomerPlug%20Standard%20plan" target="_blank" class="plan-btn solid">Subscribe Now</a>
+      </div>
+    </div>
+
+    <p class="setup-note">🕐 <strong>Full setup is completed within 24 hours</strong> of signing up. Your business is live and responding before tomorrow.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonials">
+  <div class="container">
+    <p class="section-label">Results</p>
+    <h2 class="section-title">What businesses say<br>after using CustomerPlug</h2>
+    <div class="testimonials-grid">
+      <div class="t-card anim">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I used to wake up to 30 unanswered messages every morning and feel overwhelmed before the day even started. CustomerPlug changed everything. Now I wake up, read my evening report, and already know exactly what happened overnight."</blockquote>
+        <div class="t-author">
+          <div class="t-avatar">AO</div>
+          <div class="t-info"><strong>Adaeze Okonkwo</strong><span>Fashion & Accessories Business, Lagos</span></div>
+        </div>
+      </div>
+      <div class="t-card anim">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The follow-up feature alone has recovered sales I had completely written off. Customers I thought had gone cold came back because CustomerPlug reached out at the right time. It literally pays for itself every week."</blockquote>
+        <div class="t-author">
+          <div class="t-avatar">MK</div>
+          <div class="t-info"><strong>Mohammed Kuti</strong><span>Electronics Retailer, Abuja</span></div>
+        </div>
+      </div>
+      <div class="t-card anim">
+        <div class="stars">★★★★★</div>
+        <blockquote>"My phone was off for two whole days during Eid — no network, no power. When I came back online, CustomerPlug had handled everything. My customers didn't even notice I was away. That is when I truly understood what this product does."</blockquote>
+        <div class="t-author">
+          <div class="t-avatar">FB</div>
+          <div class="t-info"><strong>Fatima Bello</strong><span>Catering & Events Business, Kano</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <p class="section-label">Frequently Asked Questions</p>
+    <h2 class="section-title">Everything you need to know</h2>
+    <p class="section-sub">Clear answers to the most common questions about CustomerPlug — no jargon, no confusion.</p>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Do I need to be CAC-registered to use CustomerPlug? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Yes. CustomerPlug is exclusively available to businesses that are registered with the Corporate Affairs Commission (CAC). Before your account is activated, CustomerPlug will verify your CAC registration status. This requirement exists to ensure that CustomerPlug is used by legitimate, accountable businesses — protecting both customers and the integrity of the service. If your business is not yet CAC-registered, we recommend completing your registration before applying.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Will CustomerPlug work even when my phone is switched off? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Absolutely. This is one of CustomerPlug's most important features. CustomerPlug does not operate from your personal phone — it runs entirely in the cloud on independent servers. This means whether your phone is switched off, out of battery, in another country, or on silent mode, CustomerPlug continues to respond to every customer message without interruption. Your business never goes dark.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">How long does the setup take? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Full setup is completed within 24 hours of signing up and submitting your business information. CustomerPlug handles the entire technical process — connecting to your WhatsApp number, programming your business knowledge, and activating your account. You do not need any technical skills. By tomorrow, your business will be live, responding automatically, and working around the clock.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">What exactly is the monthly subscription? What does it include? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>CustomerPlug is a monthly subscription service — similar to paying a monthly salary for a full-time customer service agent, except CustomerPlug never sleeps, never calls in sick, and never misses a message. Your subscription covers all 30 days of the month: instant 24/7 responses, automated follow-ups, daily evening reports, and cloud-based operation. As long as your subscription is active, your business is fully powered and always responding. You can cancel at the end of any month if you choose.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Will CustomerPlug sound like a robot to my customers? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>No. CustomerPlug is trained specifically on your business — your products, your prices, your brand tone, and the way your customers speak. The responses are natural, warm, and on-brand. Most customers will not know they are speaking with an automated system. CustomerPlug represents your business the way you would — or better — and maintains that standard consistently every single day.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Can I still reply to customers myself when I want to? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Yes, absolutely. CustomerPlug works alongside you, not against you. If you want to personally handle a specific conversation — a VIP client, a complex order, or a sensitive issue — you can step in at any time and CustomerPlug will flag it for your attention. You are always in control. CustomerPlug simply ensures that no message is missed and no lead is left without a response when you are unavailable.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">What happens at the end of each day? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Every evening, CustomerPlug sends you a comprehensive business report summarising the day's activity — how many customer enquiries came in, how many leads were captured, which questions were asked most frequently, which conversations may need your personal attention, and any key patterns CustomerPlug detected. It is like having a business manager summarise the entire day's performance while you relax.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Can CustomerPlug handle multiple product types or services? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Yes. CustomerPlug is designed to handle businesses with multiple product lines, pricing tiers, delivery options, and service categories. During setup, you share all the relevant information about everything you offer, and CustomerPlug learns it all. It can answer questions about any product, direct customers to the right option, and handle complex enquiries accurately — all without getting confused or overwhelmed.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Is there a free trial? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Yes, CustomerPlug offers a free trial period so you can experience the results before committing to a full subscription. During the trial, you will see exactly how CustomerPlug responds to your customers, handles follow-ups, and generates reports. To start your free trial, simply message CustomerPlug on WhatsApp and your business setup will begin within 24 hours.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Your competitors are already responding faster than you.</h2>
+    <p>Every hour without CustomerPlug is another hour of missed messages, lost leads, and sales going elsewhere. Start your free trial today and have your business live within 24 hours.</p>
+    <a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank" class="btn-white">Start Free Trial Now →</a>
+  </div>
+</section>
+
+</div><!-- END PAGE-HOME -->
+
+
+<!-- ===================== ABOUT PAGE ===================== -->
+<div id="page-about" class="page">
+
+<section class="about-hero">
+  <div style="width:80px;height:80px;margin:0 auto 2rem;">
+    <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#1a1a1a"/>
+      <ellipse cx="52" cy="43" rx="36" ry="33" fill="#1a3aff"/>
+      <polygon points="16,74 34,61 26,80" fill="#1a3aff"/>
+      <path d="M38,26 L38,48 Q38,57 50,57 Q62,57 62,48 L62,26" fill="none" stroke="#0a0a0a" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="50" y1="57" x2="50" y2="72" stroke="#0a0a0a" stroke-width="5.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <h1>Built for the Nigerian<br><em>Business Owner</em></h1>
+  <p>CustomerPlug was created because great businesses deserved better than unanswered messages. Here is the story of why it exists.</p>
+</section>
+
+<section class="about-story">
+  <div class="container">
+    <p class="section-label">Our Story</p>
+    <div class="about-grid">
+      <div class="about-text">
+        <h3>The business that never closes — because your customers never stop.</h3>
+        <p>CustomerPlug was built out of a simple, frustrating observation: Nigerian business owners were working harder than ever, but still losing customers every single day — not because their products were bad or their prices were wrong, but simply because they couldn't respond fast enough.</p>
+        <p>Messages came at midnight. Follow-ups were forgotten. Leads went cold. And at the end of every busy day, the business owner had no real picture of what had happened — just a phone full of unread messages and a feeling that opportunities had slipped through their hands.</p>
+        <p>CustomerPlug was built to change that. Not by adding more to your plate, but by taking the entire WhatsApp communication responsibility off it — completely. CustomerPlug is not a feature, it is a business system that runs independently, intelligently, and relentlessly, so the business owner can focus on what only they can do: grow.</p>
+        <p>CustomerPlug operates exclusively with CAC-registered businesses, ensuring every business on the platform is legitimate, accountable, and serious about serving their customers well.</p>
+      </div>
+      <div class="about-visual">
+        <span class="big-num">24/7</span>
+        <p>CustomerPlug is active and responding every hour of every day — including public holidays, Ramadan nights, Christmas morning, and every moment in between.</p>
+        <div class="about-stats">
+          <div class="stat-box"><span class="stat-num">24h</span><span>Setup time</span></div>
+          <div class="stat-box"><span class="stat-num">0s</span><span>Response delay</span></div>
+          <div class="stat-box"><span class="stat-num">∞</span><span>Uptime</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="values-section">
+  <div class="container">
+    <p class="section-label">What We Stand For</p>
+    <h2 class="section-title">CustomerPlug's core principles</h2>
+    <div class="values-grid">
+      <div class="value-card anim">
+        <div class="value-icon">🏛️</div>
+        <h3>Legitimacy First</h3>
+        <p>CustomerPlug works exclusively with CAC-verified businesses. We believe that accountability builds trust — and trusted businesses serve their customers better.</p>
+      </div>
+      <div class="value-card anim">
+        <div class="value-icon">⚡</div>
+        <h3>Speed as Respect</h3>
+        <p>Every second a customer waits for a reply is a second they are reconsidering. CustomerPlug treats fast response not as a nice-to-have, but as a fundamental act of respect for your customer's time.</p>
+      </div>
+      <div class="value-card anim">
+        <div class="value-icon">🎯</div>
+        <h3>Results Over Features</h3>
+        <p>CustomerPlug is not built to impress you with technology. It is built to grow your revenue, protect your leads, and give you back your time. Everything CustomerPlug does is measured by real business impact.</p>
+      </div>
+      <div class="value-card anim">
+        <div class="value-icon">🤝</div>
+        <h3>Partnership, Not Product</h3>
+        <p>When you subscribe to CustomerPlug, you are not buying software. You are getting a system that works as hard as you do — one that is fully invested in the success of your business every single month.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to plug in?</h2>
+    <p>CustomerPlug is ready to go live on your business within 24 hours. Start your free trial today.</p>
+    <a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank" class="btn-white">Start Free Trial →</a>
+  </div>
+</section>
+
+</div><!-- END PAGE-ABOUT -->
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="fl" onclick="show('home')">
+          <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100" height="100" rx="10" fill="#111"/>
+            <ellipse cx="52" cy="43" rx="36" ry="33" fill="#1a3aff"/>
+            <polygon points="16,74 34,61 26,80" fill="#1a3aff"/>
+            <path d="M38,26 L38,48 Q38,57 50,57 Q62,57 62,48 L62,26" fill="none" stroke="#0a0a0a" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="50" y1="57" x2="50" y2="72" stroke="#0a0a0a" stroke-width="5.5" stroke-linecap="round"/>
+          </svg>
+          Customer<span>Plug</span>
+        </div>
+        <p>Your business never sleeps again. CustomerPlug handles every WhatsApp message, every follow-up, and every lead — 24/7, every day of the month.</p>
+        <div class="social-links">
+          <a href="https://wa.me/2348156565531" target="_blank" class="s-btn" title="WhatsApp">💬</a>
+          <a href="#" class="s-btn" title="Instagram">📸</a>
+          <a href="#" class="s-btn" title="Facebook">📘</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>PRODUCT</h4>
+        <ul>
+          <li><a onclick="show('home');go('#how')">How It Works</a></li>
+          <li><a onclick="show('home');go('#features')">Features</a></li>
+          <li><a onclick="show('home');go('#pricing')">Pricing</a></li>
+          <li><a onclick="show('home');go('#testimonials')">Results</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>COMPANY</h4>
+        <ul>
+          <li><a onclick="show('about')">About Us</a></li>
+          <li><a onclick="show('home');go('#faq')">FAQ</a></li>
+          <li><a href="https://wa.me/2348156565531" target="_blank">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>GET STARTED</h4>
+        <ul>
+          <li><a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank">Free Trial</a></li>
+          <li><a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20subscribe%20to%20the%20CustomerPlug%20Standard%20plan" target="_blank">Standard Plan</a></li>
+          <li><a href="https://wa.me/2348156565531" target="_blank">WhatsApp Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 CustomerPlug. All rights reserved. &nbsp;|&nbsp; CAC-Verified Businesses Only</p>
+      <p>Made for Nigerian Business Owners 🇳🇬</p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+/* PAGE NAVIGATION */
+function show(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(hash){
+  setTimeout(()=>{
+    const el=document.querySelector(hash);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  },80);
+}
+
+/* FAQ TOGGLE */
+function toggleFAQ(btn){
+  const item=btn.closest('.faq-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+/* SCROLL ANIMATIONS */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible')});
+},{threshold:.12});
+document.querySelectorAll('.anim').forEach(el=>observer.observe(el));
+
+/* ========================================================
+   MOTION GRAPHICS — Stage Navigation
+   ======================================================== */
+let currentStage = 0;
+const totalStages = 5;
+let stageAnimating = false;
+let stageTimer = null;
+
+function mgNavigate(dir){
+  const next = currentStage + dir;
+  if(next < 0 || next >= totalStages) return;
+  goToStage(next);
+}
+
+function goToStage(n){
+  if(stageAnimating) return;
+  stageAnimating = true;
+  clearTimeout(stageTimer);
+
+  // Deactivate current
+  document.getElementById('stage-'+currentStage).classList.remove('active');
+  document.querySelectorAll('.stage-dot')[currentStage].classList.remove('active');
+
+  currentStage = n;
+
+  // Activate new
+  document.getElementById('stage-'+currentStage).classList.add('active');
+  document.querySelectorAll('.stage-dot')[currentStage].classList.add('active');
+
+  // Update counter & buttons
+  document.getElementById('mgCounter').textContent = (currentStage+1) + ' / ' + totalStages;
+  document.getElementById('mgPrev').disabled = currentStage === 0;
+  document.getElementById('mgNext').textContent = currentStage === totalStages-1 ? '↩ Start Over' : 'Next →';
+  document.getElementById('mgPrev').style.opacity = currentStage === 0 ? '.4' : '1';
+
+  setTimeout(()=>{
+    stageAnimating = false;
+    runStageAnimation(currentStage);
+  }, 100);
+}
+
+/* Click dots */
+document.querySelectorAll('.stage-dot').forEach((dot,i)=>{
+  dot.addEventListener('click',()=>goToStage(i));
+});
+
+/* Handle "Start Over" */
+document.getElementById('mgNext').addEventListener('click',function(){
+  if(currentStage === totalStages-1){ goToStage(0); }
+});
+
+/* ---- Stage Animations ---- */
+
+function runStageAnimation(n){
+  if(n===0) animateSetup();
+  if(n===1) animateConnect();
+  if(n===2) animateChat();
+  if(n===3) animateFollowup();
+  if(n===4) animateReport();
+}
+
+/* STAGE 0 — Setup: type into form fields */
+function animateSetup(){
+  const fields = document.querySelectorAll('.typing-val');
+  // Reset
+  fields.forEach(f=>{ f.textContent='|'; f.style.color='#e9edef'; });
+  document.getElementById('setupResultCard').classList.remove('visible');
+  document.getElementById('formSubmitBtn').style.opacity='1';
+  document.getElementById('learningFill').style.width='0';
+  document.getElementById('learningLabel').textContent='Analysing products...';
+
+  let delay = 200;
+  fields.forEach((field, fi)=>{
+    const text = field.dataset.text;
+    let ci = 0;
+    delay += fi * 600;
+    const start = delay;
+    setTimeout(()=>{
+      field.textContent = '';
+      const t = setInterval(()=>{
+        if(ci < text.length){
+          field.textContent += text[ci];
+          ci++;
+        } else {
+          clearInterval(t);
+        }
+      }, 45);
+    }, start);
+    delay += text.length * 45 + 300;
+  });
+
+  // After typing, submit
+  setTimeout(()=>{
+    document.getElementById('formSubmitBtn').style.opacity='.5';
+    document.getElementById('setupResultCard').classList.add('visible');
+    // Animate loading bar
+    let pct = 0;
+    const labels = ['Analysing products...','Learning your prices...','Training responses...','Almost ready...','✅ CustomerPlug is ready!'];
+    let li = 0;
+    const bar = setInterval(()=>{
+      pct = Math.min(pct + 2, 100);
+      document.getElementById('learningFill').style.width = pct+'%';
+      if(pct % 25 === 0 && li < labels.length){
+        document.getElementById('learningLabel').textContent = labels[li++];
+      }
+      if(pct >= 100) clearInterval(bar);
+    }, 40);
+  }, delay + 400);
+}
+
+/* STAGE 1 — Connect: animate connection pulse + countdown */
+function animateConnect(){
+  const pulse = document.getElementById('connectPulse');
+  const badge = document.getElementById('cloudLiveBadge');
+  const timerNum = document.getElementById('timerNum');
+  const timerBar = document.getElementById('timerBar');
+  badge.classList.remove('visible');
+  pulse.classList.remove('active');
+  timerNum.textContent = '24';
+  timerBar.style.width = '0';
+
+  setTimeout(()=>{ pulse.classList.add('active'); }, 300);
+
+  // Count down from 24 to 0 visually (fast)
+  let h = 24;
+  const cd = setInterval(()=>{
+    h = Math.max(0, h - 1);
+    timerNum.textContent = h;
+    timerBar.style.width = ((24-h)/24*100)+'%';
+    if(h===0){
+      clearInterval(cd);
+      badge.classList.add('visible');
+      timerNum.style.color = '#25d366';
+    }
+  }, 80);
+}
+
+/* STAGE 2 — Live chat animation */
+function animateChat(){
+  const area = document.getElementById('liveMessages');
+  area.innerHTML = '';
+
+  const convo = [
+    {r:'c', t:'Hi, do you have the burgundy dress in size M?', delay:400},
+    {r:'typing', delay:900},
+    {r:'b', t:'Yes! Size M is available 😊 It\'s ₦18,500 with 1–2 day delivery.', delay:1700},
+    {r:'c', t:'Does it come in black too?', delay:2600},
+    {r:'typing', delay:3100},
+    {r:'b', t:'Yes, also in black and navy blue! Which colour do you prefer?', delay:3900},
+    {r:'c', t:'I\'ll take the burgundy. How do I order?', delay:4900},
+    {r:'typing', delay:5400},
+    {r:'b', t:'Send ₦18,500 to GTBank 0123456789 (Fashion Store Ltd), then reply with your delivery address 🙏', delay:6200},
+  ];
+
+  convo.forEach(msg=>{
+    setTimeout(()=>{
+      if(document.getElementById('stage-2') && !document.getElementById('stage-2').classList.contains('active')) return;
+      if(msg.r==='typing'){
+        const t=document.createElement('div');
+        t.className='lmsg-typing';t.id='liveTyping';
+        t.innerHTML='<span></span><span></span><span></span>';
+        area.appendChild(t);area.scrollTop=area.scrollHeight;
+      } else {
+        const old=document.getElementById('liveTyping');
+        if(old) old.remove();
+        const d=document.createElement('div');
+        d.className='lmsg '+msg.r;
+        d.textContent=msg.t;
+        area.appendChild(d);area.scrollTop=area.scrollHeight;
+      }
+    }, msg.delay);
+  });
+}
+
+/* STAGE 3 — Follow-up */
+function animateFollowup(){
+  const cards = document.querySelectorAll('.fu-card');
+  const saleCard = document.getElementById('fuSaleCard');
+  saleCard.style.opacity='0';
+  saleCard.style.transform='translateY(10px)';
+
+  setTimeout(()=>{
+    saleCard.style.opacity='1';
+    saleCard.style.transform='translateY(0)';
+  }, 2500);
+}
+
+/* STAGE 4 — Report: count up numbers */
+function animateReport(){
+  const msg = document.getElementById('rMsg');
+  msg.classList.remove('visible');
+  document.querySelectorAll('.r-val').forEach(v=>{ v.textContent='0'; });
+
+  setTimeout(()=>{
+    msg.classList.add('visible');
+    document.querySelectorAll('.r-val').forEach(valEl=>{
+      const target = parseInt(valEl.dataset.val);
+      let current = 0;
+      const step = Math.ceil(target/30);
+      const t = setInterval(()=>{
+        current = Math.min(current + step, target);
+        valEl.textContent = current;
+        if(current >= target) clearInterval(t);
+      }, 40);
+    });
+  }, 400);
+}
+
+/* Auto-advance stages every 8 seconds */
+function autoAdvance(){
+  stageTimer = setTimeout(()=>{
+    if(currentStage < totalStages - 1){
+      goToStage(currentStage + 1);
+      autoAdvance();
+    }
+  }, 8000);
+}
+
+/* Start on load */
+window.addEventListener('load',()=>{
+  goToStage(0);
+  autoAdvance();
+});
+</script>
+
+</body>
+</html>
