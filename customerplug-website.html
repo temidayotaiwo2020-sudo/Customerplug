@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CustomerPlug — Your Business Never Sleeps</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#1a3aff;--blue-dark:#0f22cc;--blue-light:#e8ecff;--black:#0a0a0a;--white:#ffffff;--gray:#f5f5f7;--gray-mid:#e0e0e0;--text-muted:#666;--text-dark:#1a1a1a;--radius:16px;--radius-lg:24px}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--white);color:var(--text-dark);overflow-x:hidden}
+h1,h2,h3,h4,.nav-logo{font-family:'Syne',sans-serif}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-mid)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:800;color:var(--black);text-decoration:none;cursor:pointer}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--text-dark);font-size:.9rem;font-weight:500;transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta{background:var(--blue)!important;color:var(--white)!important;padding:.6rem 1.4rem!important;border-radius:50px!important;font-weight:600!important}
+.nav-cta:hover{background:var(--blue-dark)!important}
+.page{display:none}.page.active{display:block}
+.hero{min-height:100vh;background:var(--black);display:flex;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(26,58,255,.3) 0%,transparent 70%);pointer-events:none}
+.hc{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(26,58,255,.2);border:1px solid rgba(26,58,255,.4);color:#8aa0ff;padding:.4rem 1rem;border-radius:50px;font-size:.85rem;font-weight:500;margin-bottom:2rem}
+.dot{width:8px;height:8px;background:var(--blue);border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+@keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-logo{width:90px;height:90px;border-radius:20px;margin:0 auto 2rem;display:block;background:var(--blue);animation:fu .5s .1s ease both}
+.hero h1{font-size:clamp(2.4rem,6vw,5rem);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:1.5rem;animation:fu .5s .2s ease both}
+.hero h1 span{color:var(--blue)}
+.hero-sub{font-size:1.15rem;color:#aaa;max-width:560px;margin:0 auto 2.5rem;line-height:1.7;font-weight:300;animation:fu .5s .3s ease both}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fu .5s .4s ease both}
+.btn-primary{background:var(--blue);color:var(--white);padding:.9rem 2rem;border-radius:50px;font-size:1rem;font-weight:600;text-decoration:none;transition:all .2s;display:inline-block;font-family:'Outfit',sans-serif}
+.btn-primary:hover{background:var(--blue-dark);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--white);padding:.9rem 2rem;border-radius:50px;font-size:1rem;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,.3);transition:all .2s;display:inline-block;cursor:pointer}
+.btn-ghost:hover{border-color:var(--white);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,#555,transparent);animation:sl 2s infinite}
+@keyframes sl{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+section{padding:6rem 2rem}
+.container{max-width:1100px;margin:0 auto}
+.section-label{font-size:.78rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:var(--black);line-height:1.2;margin-bottom:1rem}
+.section-sub{font-size:1rem;color:var(--text-muted);max-width:540px;line-height:1.7}
+.problem{background:var(--gray)}
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:3rem}
+.problem-card{background:var(--white);border-radius:var(--radius);padding:2rem;border:1px solid var(--gray-mid);transition:transform .2s}
+.problem-card:hover{transform:translateY(-4px)}
+.problem-icon{font-size:2rem;margin-bottom:1rem}
+.problem-card h3{font-size:1.05rem;font-weight:700;color:var(--black);margin-bottom:.6rem}
+.problem-card p{font-size:.92rem;color:var(--text-muted);line-height:1.65}
+.how-section{background:var(--white)}
+.steps{display:flex;flex-direction:column;margin-top:3rem;position:relative}
+.steps::before{content:'';position:absolute;left:27px;top:44px;bottom:44px;width:2px;background:linear-gradient(to bottom,var(--blue),var(--blue-light))}
+.step{display:flex;gap:2rem;align-items:flex-start;padding:2rem 0}
+.step-num{width:56px;height:56px;min-width:56px;background:var(--blue);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;z-index:1;position:relative}
+.step-content h3{font-size:1.2rem;font-weight:700;color:var(--black);margin-bottom:.5rem}
+.step-content p{font-size:.95rem;color:var(--text-muted);line-height:1.7}
+.features-section{background:var(--black)}
+.features-section .section-title{color:var(--white)}
+.features-section .section-label{color:#8aa0ff}
+.features-section .section-sub{color:#888}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.feature-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:2rem;transition:all .2s}
+.feature-card:hover{background:rgba(26,58,255,.1);border-color:rgba(26,58,255,.35)}
+.feature-icon{width:48px;height:48px;background:rgba(26,58,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem}
+.feature-card h3{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+.feature-card p{font-size:.88rem;color:#777;line-height:1.65}
+.pricing-section{background:var(--gray)}
+.pricing-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:2rem;margin-top:3rem;align-items:start}
+.pricing-card{border-radius:var(--radius-lg);padding:2.5rem;border:1px solid var(--gray-mid);position:relative;background:var(--white)}
+.pricing-card.featured{background:var(--blue);border-color:var(--blue)}
+.pricing-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--black);color:var(--white);font-size:.72rem;font-weight:700;padding:.3rem 1rem;border-radius:50px;white-space:nowrap;letter-spacing:.05em}
+.plan-name{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:.5rem;color:var(--black)}
+.featured .plan-name{color:var(--white)}
+.plan-price{font-family:'Syne',sans-serif;font-size:2.6rem;font-weight:800;color:var(--black);margin:1rem 0}
+.plan-price small{font-size:1rem;font-weight:400}
+.featured .plan-price{color:var(--white)}
+.plan-desc{font-size:.9rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.6}
+.featured .plan-desc{color:rgba(255,255,255,.75)}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem}
+.plan-features li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--text-dark);line-height:1.5}
+.featured .plan-features li{color:rgba(255,255,255,.9)}
+.chk{width:18px;height:18px;min-width:18px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:.62rem;margin-top:2px}
+.featured .chk{background:rgba(255,255,255,.25)}
+.plan-btn{display:block;text-align:center;padding:.9rem;border-radius:50px;font-weight:600;font-size:.95rem;text-decoration:none;transition:all .2s;font-family:'Outfit',sans-serif;cursor:pointer;border:none;width:100%}
+.plan-btn.outline{background:transparent;border:2px solid var(--blue);color:var(--blue)}
+.plan-btn.outline:hover{background:var(--blue);color:var(--white)}
+.plan-btn.solid{background:var(--white);color:var(--blue)}
+.plan-btn.solid:hover{background:var(--black);color:var(--white)}
+.testimonials-section{background:var(--white)}
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.t-card{background:var(--gray);border-radius:var(--radius);padding:2rem;border:1px solid var(--gray-mid)}
+.stars{color:#f5a623;font-size:1rem;margin-bottom:1rem;letter-spacing:2px}
+.t-card blockquote{font-size:.95rem;color:var(--text-dark);line-height:1.75;margin-bottom:1.5rem;font-style:italic}
+.t-author{display:flex;align-items:center;gap:12px}
+.t-avatar{width:44px;height:44px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.88rem;font-family:'Syne',sans-serif}
+.t-info strong{display:block;font-size:.9rem;font-weight:700;color:var(--black)}
+.t-info span{font-size:.8rem;color:var(--text-muted)}
+.faq-section{background:var(--gray)}
+.faq-list{display:flex;flex-direction:column;gap:1rem;margin-top:3rem;max-width:740px}
+.faq-item{border:1px solid var(--gray-mid);border-radius:var(--radius);overflow:hidden;background:var(--white)}
+.faq-q{width:100%;background:none;border:none;padding:1.2rem 1.5rem;text-align:left;font-family:'Outfit',sans-serif;font-size:.98rem;font-weight:600;color:var(--black);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;transition:background .2s}
+.faq-q:hover{background:var(--gray)}
+.faq-arrow{font-size:1.3rem;transition:transform .3s;color:var(--blue);flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-item.open .faq-a{max-height:400px}
+.faq-a p{padding:0 1.5rem 1.3rem;font-size:.93rem;color:var(--text-muted);line-height:1.75}
+.cta-section{background:var(--blue);text-align:center;padding:6rem 2rem}
+.cta-section h2{font-size:clamp(1.8rem,4vw,3.2rem);font-weight:800;color:var(--white);margin-bottom:1rem;line-height:1.2}
+.cta-section p{font-size:1.05rem;color:rgba(255,255,255,.8);margin-bottom:2.5rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.65}
+.btn-white{background:var(--white);color:var(--blue);padding:1rem 2.5rem;border-radius:50px;font-size:1rem;font-weight:700;text-decoration:none;transition:all .2s;display:inline-block;font-family:'Outfit',sans-serif}
+.btn-white:hover{background:var(--black);color:var(--white);transform:translateY(-2px)}
+.about-hero{background:var(--black);padding:10rem 2rem 6rem;text-align:center}
+.about-hero h1{font-size:clamp(2rem,5vw,4rem);font-weight:800;color:var(--white);margin-bottom:1rem;line-height:1.2}
+.about-hero h1 em{color:var(--blue);font-style:normal}
+.about-hero p{font-size:1.1rem;color:#aaa;max-width:580px;margin:0 auto;line-height:1.7}
+.about-story{padding:6rem 2rem}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
+.about-text h3{font-size:1.75rem;font-weight:800;color:var(--black);margin-bottom:1.5rem;line-height:1.3}
+.about-text p{font-size:.97rem;color:var(--text-muted);line-height:1.8;margin-bottom:1rem}
+.about-visual{background:var(--blue);border-radius:var(--radius-lg);padding:3rem;text-align:center;color:white}
+.big-num{font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;display:block;margin-bottom:.5rem}
+.about-visual>p{color:rgba(255,255,255,.8);font-size:.95rem;line-height:1.6}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+.stat-box{background:rgba(255,255,255,.12);border-radius:12px;padding:1.2rem .8rem;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;display:block}
+.stat-box span{font-size:.78rem;color:rgba(255,255,255,.7)}
+.values-section{background:var(--gray);padding:6rem 2rem}
+.values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:3rem}
+.value-card{background:var(--white);padding:2rem;border-radius:var(--radius);border:1px solid var(--gray-mid)}
+.value-icon{font-size:2.2rem;margin-bottom:1rem}
+.value-card h3{font-size:1.05rem;font-weight:700;color:var(--black);margin-bottom:.5rem}
+.value-card p{font-size:.9rem;color:var(--text-muted);line-height:1.65}
+.team-section{background:var(--white);padding:6rem 2rem}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.5rem;margin-top:3rem}
+.team-card{background:var(--gray);border-radius:var(--radius);padding:2rem;text-align:center;border:1px solid var(--gray-mid)}
+.team-avatar{width:68px;height:68px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:1.2rem;font-family:'Syne',sans-serif;margin:0 auto 1rem}
+.team-card h4{font-size:1rem;font-weight:700;color:var(--black);margin-bottom:.25rem}
+.team-card .role{font-size:.85rem;color:var(--text-muted)}
+.team-card .email-link{font-size:.78rem;color:var(--blue);margin-top:.5rem;word-break:break-all;text-decoration:none;display:block}
+.team-card .email-link:hover{text-decoration:underline}
+footer{background:var(--black);padding:4rem 2rem 2rem}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:3rem;margin-bottom:3rem}
+.footer-brand .fl{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--white);text-decoration:none;margin-bottom:1rem;cursor:pointer}
+.footer-brand .fl span{color:var(--blue)}
+.footer-brand>p{font-size:.88rem;color:#555;line-height:1.6;max-width:230px;margin-bottom:.5rem}
+.f-email{font-size:.82rem;color:var(--blue);text-decoration:none;display:block;margin-bottom:1rem}
+.social-links{display:flex;gap:10px;flex-wrap:wrap}
+.s-btn{width:36px;height:36px;border-radius:50%;background:#111;border:1px solid #222;display:flex;align-items:center;justify-content:center;font-size:.9rem;text-decoration:none;transition:all .2s}
+.s-btn:hover{background:var(--blue);border-color:var(--blue)}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:1rem;letter-spacing:.05em}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-col ul a{color:#555;text-decoration:none;font-size:.88rem;transition:color .2s;cursor:pointer}
+.footer-col ul a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid #1a1a1a;padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-bottom p{font-size:.82rem;color:#3a3a3a}
+.anim{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.anim.visible{opacity:1;transform:translateY(0)}
+@media(max-width:900px){nav{padding:1rem 1.5rem}.nav-links{display:none}.footer-top{grid-template-columns:1fr 1fr;gap:2rem}.about-grid{grid-template-columns:1fr}.about-stats{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.footer-top{grid-template-columns:1fr}.pricing-cards{grid-template-columns:1fr}.steps::before{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" onclick="show('home')">
+    <div style="width:38px;height:38px;border-radius:8px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🔌</div>
+    Customer<span>Plug</span>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="show('home');go('#how')">How It Works</a></li>
+    <li><a onclick="show('home');go('#features')">Features</a></li>
+    <li><a onclick="show('home');go('#pricing')">Pricing</a></li>
+    <li><a onclick="show('home');go('#faq')">FAQ</a></li>
+    <li><a onclick="show('about')">About Us</a></li>
+    <li><a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank" class="nav-cta">Get Started Free</a></li>
+  </ul>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+
+<section class="hero">
+  <div class="hc">
+    <div class="hero-badge"><div class="dot"></div> Now Live — Start Your Free Trial Today</div>
+    <div class="hero-logo" style="display:flex;align-items:center;justify-content:center;font-size:3rem;">🔌</div>
+    <h1>Your Business<br><span>Never Sleeps</span> Again</h1>
+    <p class="hero-sub">CustomerPlug handles every WhatsApp message instantly, follows up every lead automatically and sends you a full business report every evening while you focus on growing.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank" class="btn-primary">Start Free Trial</a>
+      <span class="btn-ghost" onclick="go('#how')">See How It Works</span>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div></div>
+</section>
+
+<section class="problem" id="problem">
+  <div class="container">
+    <p class="section-label">The Problem</p>
+    <h2 class="section-title">Sound familiar?</h2>
+    <p class="section-sub">Every single day business owners lose customers they never even knew they had. Here is why.</p>
+    <div class="problem-grid">
+      <div class="problem-card anim"><div class="problem-icon">😴</div><h3>Customers message at midnight</h3><p>A customer sends a message at 11pm asking about your product. No reply. By morning they already bought from your competitor and you never knew.</p></div>
+      <div class="problem-card anim"><div class="problem-icon">📱</div><h3>You are stuck in your inbox</h3><p>You started a business for freedom. But now you cannot eat, rest or spend time with family without your phone in your hand replying messages all day.</p></div>
+      <div class="problem-card anim"><div class="problem-icon">💸</div><h3>Slow replies mean lost money</h3><p>Every delayed reply is a sale walking out the door. Customers who do not get a fast response simply move to the next business without thinking twice.</p></div>
+      <div class="problem-card anim"><div class="problem-icon">🔕</div><h3>Follow ups never happen</h3><p>You mean to follow up that customer who asked about your product last week. But life gets busy. They are forgotten. And so is that sale.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="how-section" id="how">
+  <div class="container">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title">Set it up once.<br>Let it run forever.</h2>
+    <p class="section-sub">CustomerPlug takes over your WhatsApp communication completely so you never have to worry about it again.</p>
+    <div class="steps">
+      <div class="step anim"><div class="step-num">1</div><div class="step-content"><h3>Tell us about your business</h3><p>We learn everything about what you sell, your prices, your delivery process and your most common customer questions. The more you share the smarter CustomerPlug becomes at representing your brand.</p></div></div>
+      <div class="step anim"><div class="step-num">2</div><div class="step-content"><h3>We set everything up for you</h3><p>Our team connects CustomerPlug to your WhatsApp number within 24 to 48 hours. You never touch any technical tool. We handle every part of the setup and hand it over to you fully working.</p></div></div>
+      <div class="step anim"><div class="step-num">3</div><div class="step-content"><h3>CustomerPlug starts working immediately</h3><p>From that moment every customer who messages gets a smart instant reply. Orders are tracked. Leads are followed up automatically. Your business never misses another customer again.</p></div></div>
+      <div class="step anim"><div class="step-num">4</div><div class="step-content"><h3>You receive your daily report at 8pm</h3><p>Every evening at 8pm you get a full WhatsApp report showing total orders, revenue, new customers and follow ups sent. You always know what happened without being online all day.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="features-section" id="features">
+  <div class="container">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">One assistant.<br>Everything done.</h2>
+    <p class="section-sub">CustomerPlug does the work of three customer service staff without the salary, sick days or attitude.</p>
+    <div class="features-grid">
+      <div class="feature-card anim"><div class="feature-icon">⚡</div><h3>Instant 24/7 Replies</h3><p>Every customer message gets a smart professional reply within seconds. Day or night. Weekends and public holidays included. No customer ever waits again.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">🔄</div><h3>Automatic Follow Ups</h3><p>CustomerPlug follows up every customer who goes quiet after 12 or 24 hours automatically. No lead is ever forgotten. No sale is ever left on the table.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">📦</div><h3>Order Tracking</h3><p>Every single order is recorded automatically in real time. No more writing orders in notebooks or losing track of who bought what and when.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">🧾</div><h3>Invoice Generation</h3><p>The moment a customer pays CustomerPlug generates a professional invoice and sends it directly to them on WhatsApp within seconds. Seamless and automatic every time.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">📊</div><h3>Daily CEO Report at 8pm</h3><p>Every evening at 8pm you receive a complete business summary on WhatsApp. Total orders, revenue, new customers and follow ups sent. All in one clean message.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">🚨</div><h3>Human Escalation Alerts</h3><p>When a customer needs real human attention CustomerPlug immediately sends you an alert on WhatsApp with the customer name, phone number and full summary of the issue so you can call them.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">🎙️</div><h3>Voice Note Support</h3><p>Customers can send voice notes and CustomerPlug understands every word and replies intelligently. No customer communication style is ever left behind.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">🖼️</div><h3>Image Handling</h3><p>Customers can send pictures of products they want and CustomerPlug understands exactly what they need and responds with the right information immediately.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">📋</div><h3>Lead Capture and Storage</h3><p>Every new customer who messages is automatically saved with their name, phone number, first message and the exact date they reached out. Always organised. Never lost.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">🌐</div><h3>Multi Platform Support</h3><p>CustomerPlug works across WhatsApp, Instagram and Facebook. No matter where your customers find you they always get an instant professional reply.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">🧠</div><h3>Trained on Your Business</h3><p>CustomerPlug learns everything about your specific business, products, prices and policies. It speaks in your brand voice and knows your business inside and out.</p></div>
+      <div class="feature-card anim"><div class="feature-icon">🔒</div><h3>Your Data Is Always Private</h3><p>Your business data and your customers information is completely secure and private. It is never shared with any third party. Ever. Period.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <p class="section-label">Pricing</p>
+    <h2 class="section-title">Simple. Honest. No surprises.</h2>
+    <p class="section-sub">Try it free first. Experience the results for yourself. Then decide when you are ready.</p>
+    <div class="pricing-cards">
+      <div class="pricing-card anim">
+        <p class="plan-name">Free Trial</p>
+        <div class="plan-price">₦0 <small>to start</small></div>
+        <p class="plan-desc">Experience CustomerPlug before paying a single naira. See your customers getting instant replies in real time. Limited to 200 messages so you can truly feel the difference.</p>
+        <ul class="plan-features">
+          <li><div class="chk">✓</div> AI replies to customers 24/7</li>
+          <li><div class="chk">✓</div> Up to 200 messages included</li>
+          <li><div class="chk">✓</div> Experience live automation firsthand</li>
+          <li><div class="chk">✓</div> See automatic follow ups in action</li>
+          <li><div class="chk">✓</div> No credit card needed to start</li>
+        </ul>
+        <a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank" class="plan-btn outline">Start Free Trial</a>
+      </div>
+      <div class="pricing-card featured anim">
+        <div class="pricing-badge">FULL ACCESS</div>
+        <p class="plan-name">Full Subscription</p>
+        <div class="plan-price">₦150k <small>/month</small></div>
+        <p class="plan-desc">Complete access to everything CustomerPlug can do. Nothing held back. Your entire customer communication handled automatically from day one.</p>
+        <ul class="plan-features">
+          <li><div class="chk">✓</div> Unlimited customer replies 24/7</li>
+          <li><div class="chk">✓</div> Automatic follow ups at 12 and 24 hours</li>
+          <li><div class="chk">✓</div> Full order tracking and management</li>
+          <li><div class="chk">✓</div> Automatic invoice generation and delivery</li>
+          <li><div class="chk">✓</div> Daily CEO report every evening at 8pm</li>
+          <li><div class="chk">✓</div> Instant human escalation alerts</li>
+          <li><div class="chk">✓</div> Voice note and image handling</li>
+          <li><div class="chk">✓</div> Full lead capture and organised storage</li>
+          <li><div class="chk">✓</div> WhatsApp, Instagram and Facebook support</li>
+          <li><div class="chk">✓</div> Priority WhatsApp support from our team</li>
+        </ul>
+        <a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20subscribe%20to%20the%20CustomerPlug%20full%20plan" target="_blank" class="plan-btn solid">Get Full Access</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-section" id="testimonials">
+  <div class="container">
+    <p class="section-label">What Business Owners Say</p>
+    <h2 class="section-title">They tried it.<br>Now they cannot stop.</h2>
+    <div class="testimonials-grid">
+      <div class="t-card anim"><div class="stars">★★★★★</div><blockquote>"I used to reply messages from 6am to midnight every day. Since CustomerPlug I wake up to orders already taken. I slept through the night properly for the first time in two years."</blockquote><div class="t-author"><div class="t-avatar">AO</div><div class="t-info"><strong>Amaka Okafor</strong><span>Fashion Business, Lagos</span></div></div></div>
+      <div class="t-card anim"><div class="stars">★★★★★</div><blockquote>"A customer messaged at 2am. CustomerPlug replied instantly, answered every question and they paid before I even woke up. I could not believe what I was seeing when I checked my phone."</blockquote><div class="t-author"><div class="t-avatar">TF</div><div class="t-info"><strong>Tunde Fashola</strong><span>Electronics Seller, Abuja</span></div></div></div>
+      <div class="t-card anim"><div class="stars">★★★★★</div><blockquote>"The 8pm daily report changed my life. I know my exact numbers every single day without any stress. CustomerPlug feels like having a full team at a fraction of the cost."</blockquote><div class="t-author"><div class="t-avatar">CN</div><div class="t-info"><strong>Chisom Nwosu</strong><span>Food Business, Port Harcourt</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="container">
+    <p class="section-label">FAQ</p>
+    <h2 class="section-title">Questions people ask</h2>
+    <div class="faq-list">
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">Will I lose my WhatsApp chats and contacts?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Not at all. Before we set anything up we ask you to back up your chats first. Everything stays completely safe. Your contacts, your history and all your conversations are preserved.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">Can I see the customer chats directly?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Business owners do not see individual chats directly since CustomerPlug manages the inbox in the cloud. Instead you receive a full daily report on WhatsApp every evening at 8pm covering everything that happened that day. If anything urgent comes up CustomerPlug alerts you on WhatsApp immediately with all the details you need to act. You stay fully informed without being stuck in the inbox.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">What happens when a customer needs a real human?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>The moment CustomerPlug senses a situation that needs human attention it immediately sends you an alert on WhatsApp with the customer name, phone number and a full summary of what they need. You call the customer directly and handle it personally. A phone call from the business owner almost always turns an upset customer into a loyal one.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">Do I need to be technical to use CustomerPlug?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Not at all. Our team handles everything from start to finish. You just tell us about your business and we build, train and test everything for you. You never touch a single technical tool. We hand it over fully working and ready to go.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">Can I still use my WhatsApp number personally?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>CustomerPlug operates fully in the cloud. Once it takes over your business number it manages all customer communication from that point forward. This means you will not be using that number on the regular WhatsApp app anymore. We strongly recommend using a separate dedicated business number so your personal conversations remain completely private and separate.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">What is the free trial limit?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>The free trial includes 200 messages so you can experience CustomerPlug working for your business in real time. Once the 200 messages are exhausted CustomerPlug stops responding until you subscribe to the full plan at 150,000 Naira per month. You will see exactly what you are getting before you pay a single naira.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">How long does setup take?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Once you sign up our team gets to work immediately. Full setup is completed within 24 to 48 hours. We train CustomerPlug on your specific business, test every feature and hand it over to you ready to start working from day one.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">Does CustomerPlug work on Instagram and Facebook too?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Yes. The full subscription covers WhatsApp, Instagram and Facebook. No matter where your customers find you they will always receive an instant professional reply.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">What if CustomerPlug gives a wrong answer?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>CustomerPlug only responds based on what it has been trained on. If it encounters something it does not know it immediately escalates to you rather than guessing. You can update its training at any time to improve how it handles new situations as your business evolves.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">How does CustomerPlug handle angry customers?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>The moment CustomerPlug detects frustration, anger or a complaint it stops trying to handle it alone. It tells the customer warmly that a team member will be with them shortly and immediately sends you an alert with everything you need. You call them personally. That one call from the business owner shows the customer they genuinely matter and almost always resolves everything completely.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">How is my daily report delivered?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Every evening at 8pm CustomerPlug sends a complete business summary directly to your personal WhatsApp number. It covers total orders, total revenue, new customers, follow ups sent and any escalations from that day. You always know your numbers without opening any spreadsheet or logging into anything.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">What information does CustomerPlug need to get started?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>CustomerPlug needs your business name, what you sell, your prices, how orders work, delivery details, payment methods, common customer questions and any other relevant business information. The more you share the better it performs. Think of it like training a new team member — the more they know the better they serve your customers.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">Is my business data safe with CustomerPlug?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Absolutely. Your business data and your customers information is completely private and secure. We do not share it with any third party under any circumstances. Your business is yours and your customer relationships stay yours.</p></div>
+      </div>
+
+      <div class="faq-item anim">
+        <button class="faq-q" onclick="tfaq(this)">Can I cancel my subscription anytime?<span class="faq-arrow">+</span></button>
+        <div class="faq-a"><p>Yes. No long contracts and no hidden cancellation fees. Simply give us notice before your next billing date and your subscription ends cleanly. We keep everything fair and simple for every business owner.</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="start">
+  <div class="container">
+    <h2>Ready to stop losing customers?</h2>
+    <p>Start your free trial today. No credit card needed. See CustomerPlug working for your business in less than 48 hours.</p>
+    <a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank" class="btn-white">Start Free Trial on WhatsApp</a>
+  </div>
+</section>
+
+</div>
+<!-- END HOME PAGE -->
+
+
+<!-- ABOUT PAGE -->
+<div id="page-about" class="page">
+
+<section class="about-hero">
+  <div class="container">
+    <p class="section-label" style="color:#8aa0ff">Our Story</p>
+    <h1>We built CustomerPlug<br>because <em>we felt the pain</em></h1>
+    <p>Every business owner we spoke to had the same story. Too many messages. Not enough time. Customers slipping away quietly. We decided to fix that permanently.</p>
+  </div>
+</section>
+
+<section class="about-story">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <h3>Built for businesses that refuse to miss a customer</h3>
+        <p>CustomerPlug was born from a simple truth. Business owners in Africa are some of the hardest working people in the world. They wake up early. They sleep late. They sacrifice everything to build something that matters.</p>
+        <p>But the one thing they could never solve was being in two places at once. Customers message at midnight. At weekends. During family time. And every unanswered message is a lost sale and a lost relationship.</p>
+        <p>We built CustomerPlug to be the most reliable team member any business owner could ever have. One that never sleeps, never takes a day off and never lets a customer feel ignored.</p>
+        <p>Today CustomerPlug serves businesses across Nigeria and Africa, helping owners finally breathe and focus on what they do best — growing their business and living their life.</p>
+      </div>
+      <div class="about-visual">
+        <span class="big-num">24/7</span>
+        <p>CustomerPlug never sleeps. Every customer gets a reply within seconds no matter the time or day.</p>
+        <div class="about-stats">
+          <div class="stat-box"><span class="stat-num">0s</span><span>Average reply time</span></div>
+          <div class="stat-box"><span class="stat-num">∞</span><span>Messages handled</span></div>
+          <div class="stat-box"><span class="stat-num">8pm</span><span>Daily CEO report</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="values-section">
+  <div class="container">
+    <p class="section-label">What We Believe</p>
+    <h2 class="section-title">Our values</h2>
+    <p class="section-sub">These are the principles that guide everything we build and every decision we make at CustomerPlug.</p>
+    <div class="values-grid">
+      <div class="value-card anim"><div class="value-icon">🤝</div><h3>Business owners deserve to rest</h3><p>No business owner should be a slave to their inbox. We believe in building tools that give entrepreneurs their time, peace and freedom back for good.</p></div>
+      <div class="value-card anim"><div class="value-icon">🎯</div><h3>Every customer matters</h3><p>One missed message can mean one lost customer for life. We treat every single customer interaction as a business critical moment worth protecting.</p></div>
+      <div class="value-card anim"><div class="value-icon">🌍</div><h3>Africa first</h3><p>We build with African businesses in mind. We understand the market, the customers and the communication styles that most tools completely miss.</p></div>
+      <div class="value-card anim"><div class="value-icon">💡</div><h3>Simplicity wins</h3><p>Technology should make life easier not harder. CustomerPlug is built so that anyone can use it successfully regardless of how technical they are.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="team-section">
+  <div class="container">
+    <p class="section-label">Our Team</p>
+    <h2 class="section-title">The people behind CustomerPlug</h2>
+    <p class="section-sub">A dedicated team working every single day to make sure your business never misses another customer again.</p>
+    <div class="team-grid">
+      <div class="team-card anim"><div class="team-avatar">CP</div><h4>CustomerPlug</h4><p class="role">Founder and CEO</p><a href="mailto:support@customerplug.com" class="email-link">support@customerplug.com</a></div>
+      <div class="team-card anim"><div class="team-avatar">M</div><h4>Martha</h4><p class="role">Client Success Manager</p><a href="mailto:martha@customerplug.com" class="email-link">martha@customerplug.com</a></div>
+      <div class="team-card anim"><div class="team-avatar">N</div><h4>Nimot</h4><p class="role">Sales Manager</p><a href="mailto:nimot@customerplug.com" class="email-link">nimot@customerplug.com</a></div>
+      <div class="team-card anim"><div class="team-avatar">AC</div><h4>Accounts Team</h4><p class="role">Finance and Billing</p><a href="mailto:accounts@customerplug.com" class="email-link">accounts@customerplug.com</a></div>
+      <div class="team-card anim"><div class="team-avatar">S</div><h4>Sales Team</h4><p class="role">Business Development</p><a href="mailto:sales@customerplug.com" class="email-link">sales@customerplug.com</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to join businesses running on autopilot?</h2>
+    <p>Start your free trial today and experience what it feels like when your business never misses a customer again.</p>
+    <a href="https://wa.me/2348156565531?text=Hi!%20I%20want%20to%20start%20my%20free%20trial%20with%20CustomerPlug" target="_blank" class="btn-white">Start Free Trial on WhatsApp</a>
+  </div>
+</section>
+
+</div>
+<!-- END ABOUT PAGE -->
+
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="fl" onclick="show('home')">
+          <div style="width:32px;height:32px;border-radius:6px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-right:2px;">🔌</div>
+          Customer<span>Plug</span>
+        </div>
+        <p>Your business communication assistant. Working 24/7 so you never miss another customer.</p>
+        <a href="mailto:support@customerplug.com" class="f-email">support@customerplug.com</a>
+        <div class="social-links">
+          <a href="https://wa.me/2348156565531" target="_blank" class="s-btn" title="WhatsApp">💬</a>
+          <a href="https://instagram.com/customerplug" target="_blank" class="s-btn" title="Instagram">📸</a>
+          <a href="https://facebook.com/customerplug" target="_blank" class="s-btn" title="Facebook">👥</a>
+          <a href="https://twitter.com/customerplug" target="_blank" class="s-btn" title="X (Twitter)">🐦</a>
+          <a href="https://tiktok.com/@customerplug" target="_blank" class="s-btn" title="TikTok">🎵</a>
+          <a href="https://linkedin.com/company/customerplug" target="_blank" class="s-btn" title="LinkedIn">💼</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a onclick="show('home')">Home</a></li>
+          <li><a onclick="show('home');go('#how')">How It Works</a></li>
+          <li><a onclick="show('home');go('#features')">Features</a></li>
+          <li><a onclick="show('home');go('#pricing')">Pricing</a></li>
+          <li><a onclick="show('home');go('#faq')">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a onclick="show('about')">About Us</a></li>
+          <li><a href="https://wa.me/2348156565531" target="_blank">WhatsApp Us</a></li>
+          <li><a href="mailto:sales@customerplug.com">Sales</a></li>
+          <li><a href="mailto:support@customerplug.com">Support</a></li>
+          <li><a href="mailto:accounts@customerplug.com">Accounts</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:sales@customerplug.com">sales@customerplug.com</a></li>
+          <li><a href="mailto:support@customerplug.com">support@customerplug.com</a></li>
+          <li><a href="mailto:martha@customerplug.com">martha@customerplug.com</a></li>
+          <li><a href="mailto:nimot@customerplug.com">nimot@customerplug.com</a></li>
+          <li><a href="mailto:accounts@customerplug.com">accounts@customerplug.com</a></li>
+          <li><a href="https://wa.me/2348156565531" target="_blank">08156565531</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 CustomerPlug. All rights reserved.</p>
+      <p>Built for businesses that refuse to miss a customer.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function show(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(id){
+  setTimeout(()=>{
+    const el=document.querySelector(id);
+    if(el)el.scrollIntoView({behavior:'smooth'});
+  },120);
+}
+function tfaq(btn){
+  const item=btn.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.anim').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
